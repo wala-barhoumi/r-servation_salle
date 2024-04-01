@@ -1,30 +1,41 @@
 const express = require ("express");
 const bodyParser = require('body-parser');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
 const app = express();
 const mongoose=require("mongoose")
-mongoose.connect("mongodb+srv://user:walawala@cluster0.jfztsft.mongodb.net/reservation?retryWrites=true&w=majority&appName=Cluster0")
+app.set('view engine', 'ejs');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+mongoose.connect("mongodb+srv://user:walawala@cluster0.jfztsft.mongodb.net/reservationApp?retryWrites=true&w=majority&appName=Cluster0")
     .then(() =>{
-    console.log("connected");})
+        console.log("connected");})
     .catch(()=>{
         console.log("error");
     })
-const User=require('./models/user')
-app.listen(3000,function () {
-    console.log("server started on port 3000");
+const db = mongoose.connection;
+
+db.on('error', console.error.bind(console, 'Error de connexion à MongoDB :'));
+db.once('open', () => {
+    console.log('Connect à MongoDB !');
+});
+
+
+app.listen(4000,function () {
+    console.log("server started on port 4000");
 
 })
 app.get('/', function (req, res) {
-    res.send('bonjour')
-})
-app.post('/user',async (req,res)=>{
-try {
-  const user=  await User.create(req.body);
-  res.status(200).json(user);
-
-}catch (error){
-    res.status(500).json({message:error.message})
-}
-
+    res.render('app');
+});
+app.get('/login',function (req,res){
+    res.render('login');
+});
+app.get('/signup',function (req,res){
+    res.render('signup');
+});
+app.get('/room/',function (req,res){
+    res.render('meetingRoom');
+});
+app.get('/reservation/',function (req,res){
+    res.render('reservation');
 });

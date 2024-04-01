@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des salles de réunion</title>
+</head>
+<body>
+<h1>Gestion des salles de réunion</h1>
+<ul>
+    <% if (meetingRooms && meetingRooms.length) { %>
+        <% meetingRooms.forEach(meetingRoom => { %>
+            <li>
+                <strong>Nom de la salle :</strong> <%= meetingRoom.name %> <br>
+                <strong>Capacité :</strong> <%= meetingRoom.capacity %> <br>
+                <strong>Équipements :</strong> <%= meetingRoom.amenities.join(', ') %> <br>
+                <form action="/meetingRooms/<%= meetingRoom._id %>?_method=DELETE" method="POST">
+                    <button type="submit">Supprimer</button>
+                </form>
+            </li>
+        <% }) %>
+    <% } else { %>
+        <li>No meeting rooms found</li>
+    <% } %>
+</ul>
+<h2>Ajouter une nouvelle salle de réunion</h2>
+<form action="/meetingRooms" method="POST">
+    <label for="name">Nom de la salle :</label>
+    <input type="text" id="name" name="name" required> <br>
+    <label for="capacity">Capacité :</label>
+    <input type="number" id="capacity" name="capacity" required> <br>
+    <label for="amenities">Équipements (séparés par des virgules) :</label>
+    <input type="text" id="amenities" name="amenities"> <br>
+    <button type="submit">Ajouter</button>
+</form>
+</body>
+</html>
+
