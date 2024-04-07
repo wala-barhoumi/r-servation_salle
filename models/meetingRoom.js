@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
 const meetingRoomSchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    capacity: { type: Number, required: true },
+    name: { type: String, required: false },
+    capacity: { type: Number, required: false },
     amenities: [String],
-    availability: { type: Boolean, default: true }
+    availability: { type: Boolean, default: false }
 });
 
-module.exports = mongoose.model('MeetingRoom', meetingRoomSchema);
+module.exports = mongoose.model('meetingRoom', meetingRoomSchema);

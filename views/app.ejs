@@ -4,12 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Application de gestion des salles de réunion</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            padding: 20px;
+        }
+        .welcome-container {
+            max-width: 400px;
+            margin: 0 auto;
+            text-align: center;
+            margin-top: 50px; /* Added margin-top for spacing */
+        }
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .btn-container button {
+            margin: 0 10px;
+        }
+    </style>
 </head>
 <body>
-<h1>Bienvenue sur l'application de gestion des salles de réunion</h1>
-<ul>
-    <li><button onclick="window.location.href='/login'">Login</button></li>
-    <li><button onclick="window.location.href='/signup'">Signup</button></li>
-</ul>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="welcome-container">
+                    <h1>Bienvenue sur l'application de gestion des salles de réunion</h1>
+                    <div class="btn-container">
+                        <button class="btn btn-primary" onclick="window.location.href='/login'">Login</button>
+                        <button class="btn btn-success" onclick="window.location.href='/signup'">Signup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

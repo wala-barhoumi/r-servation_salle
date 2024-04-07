@@ -4,15 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            padding: 20px;
+            background-color: #f8f9fa; /* Setting background color */
+        }
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff; /* Setting form background color */
+            padding: 20px;
+            border-radius: 10px; /* Adding border radius for a rounded look */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adding box shadow for depth */
+        }
+        label {
+            font-weight: bold; /* Making labels bold */
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ced4da; /* Adding border color */
+            border-radius: 5px; /* Adding border radius */
+        }
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff; /* Setting button background color */
+            color: #fff; /* Setting button text color */
+            border: none;
+            border-radius: 5px; /* Adding border radius */
+            cursor: pointer;
+            transition: background-color 0.3s; /* Adding transition effect */
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3; /* Changing background color on hover */
+        }
+    </style>
 </head>
 <body>
-<h1>Connexion</h1>
-<form action="/login" method="POST">
-    <label for="username">username :</label><br>
-    <input type="text" id="username" name="username" required><br>
-    <label for="password">Mot de passe :</label><br>
-    <input type="password" id="password" name="password" required><br>
-    <button type="submit">submit</button>
-</form>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <div class="form-container">
+                    <h1 class="text-center">Connexion</h1>
+                    <form action="/login" method="POST">
+                        <label for="username">Username :</label>
+                        <input type="text" id="username" name="username" required>
+
+                        <label for="password">Mot de passe :</label>
+                        <input type="password" id="password" name="password" required>
+
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

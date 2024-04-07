@@ -6,34 +6,34 @@
     <title>Gestion des réservations</title>
 </head>
 <body>
-<h1>Gestion des réservations</h1>
-<ul>
-    <% reservations.forEach(reservation => { %>
-        <li>
-            <strong>Utilisateur :</strong> <%= reservation.user.username %> <br>
-            <strong>Salle de réunion :</strong> <%= reservation.meetingRoom.name %> <br>
-            <strong>Date de début :</strong> <%= reservation.startTime %> <br>
-            <strong>Date de fin :</strong> <%= reservation.endTime %> <br>
-            <form action="/reservations/<%= reservation._id %>?_method=DELETE" method="POST">
-                <button type="submit">Supprimer</button>
-            </form>
-        </li>
-    <% }) %>
+    <h1>Gestion des réservations</h1>
+    <ul>
+        <% reservations.forEach(reservation => { %>
+            <li>
+                <strong>Utilisateur :</strong> <%= reservation.user.username %> <br>
+                <strong>Salle de réunion :</strong> <%= reservation.meetingRoom.name %> <br>
+                <strong>Date de début :</strong> <%= reservation.startTime %> <br>
+                <strong>Date de fin :</strong> <%= reservation.endTime %> <br>
+                <form action="/reservations/<%= reservation._id %>?_method=DELETE" method="POST">
+                    <button type="submit">Supprimer</button>
+                </form>
+            </li>
+        <% }); %>
+    </ul>
 
-</ul>
-<h2>Ajouter une nouvelle réservation</h2>
-<form action="/reservations" method="POST">
-    <label for="meetingRoom">Salle de réunion :</label>
-    <select id="meetingRoom" name="meetingRoom" required>
-        <% meetingRooms.forEach(meetingRoom => { %>
-            <option value="<%= meetingRoom._id %>"><%= meetingRoom.name %></option>
-        <% }) %>
-    </select> <br>
-    <label for="startTime">Date de début :</label>
-    <input type="datetime-local" id="startTime" name="startTime" required> <br>
-    <label for="endTime">Date de fin :</label>
-    <input type="datetime-local" id="endTime" name="endTime" required> <br>
-    <button type="submit">Réserver</button>
-</form>
+    <h2>Ajouter une nouvelle réservation</h2>
+    <form action="/reservations" method="POST">
+        <label for="meetingRoom">Salle de réunion :</label>
+        <select id="meetingRoom" name="meetingRoom" required>
+            <% meetingRooms.forEach(meetingRoom => { %>
+                <option value="<%= meetingRoom._id %>"><%= meetingRoom.name %></option>
+            <% }); %>
+        </select> <br>
+        <label for="startTime">Date de début :</label>
+        <input type="datetime-local" id="startTime" name="startTime" required> <br>
+        <label for="endTime">Date de fin :</label>
+        <input type="datetime-local" id="endTime" name="endTime" required> <br>
+        <button type="submit">Réserver</button>
+    </form>
 </body>
 </html>
