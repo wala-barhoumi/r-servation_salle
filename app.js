@@ -108,9 +108,23 @@ app.get('/meetingRoom', async (req, res) => {
 */
 
 
-app.get('/reservation/',function (req,res){
-    res.render('reservation');
+// Assuming you have an array of reservations stored in a variable named 'reservations'
+app.get('/reservation', async (req, res) => {
+    try {
+        // Fetch reservations from the database
+        const reservation = await Reservation.find().populate('user meetingRoom');
+
+        // Fetch meeting rooms from the database
+        const meetingRoom = await MeetingRoom.find();
+
+        // Render the reservation page and pass the reservations and meetingRooms data to the template
+        res.render('reservation', { reservation, meetingRoom });
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        res.status(500).send('Internal Server Error');
+    }
 });
+
 
 app.listen(4100,function () {
     console.log("server started on port 4100");

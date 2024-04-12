@@ -4,35 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestion des salles de réunion</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Custom CSS styles */
+        body {
+            padding: 20px;
+        }
+        .meeting-room {
+            margin-bottom: 20px;
+        }
+        .meeting-room form {
+            display: inline;
+        }
+    </style>
 </head>
 <body>
-<h1>Gestion des salles de réunion</h1>
-<ul>
-    <% if (meetingRooms && meetingRooms.length) { %>
-        <% meetingRooms.forEach(meetingRoom => { %>
-            <li>
-                <strong>Nom de la salle :</strong> <%= meetingRoom.name %> <br>
-                <strong>Capacité :</strong> <%= meetingRoom.capacity %> <br>
-                <strong>Équipements :</strong> <%= meetingRoom.amenities.join(', ') %> <br>
-                <form action="/meetingRooms/<%= meetingRoom._id %>?_method=DELETE" method="POST">
-                    <button type="submit">Supprimer</button>
-                </form>
-            </li>
-        <% }) %>
-    <% } else { %>
-        <li>No meeting rooms found</li>
-    <% } %>
-</ul>
-<h2>Ajouter une nouvelle salle de réunion</h2>
-<form action="/meetingRooms" method="POST">
-    <label for="name">Nom de la salle :</label>
-    <input type="text" id="name" name="name" required> <br>
-    <label for="capacity">Capacité :</label>
-    <input type="number" id="capacity" name="capacity" required> <br>
-    <label for="amenities">Équipements (séparés par des virgules) :</label>
-    <input type="text" id="amenities" name="amenities"> <br>
-    <button type="submit">Ajouter</button>
-</form>
+<div class="container">
+    <h1>Gestion des salles de réunion</h1>
+    <ul class="list-group">
+        <% if (meetingRoom && meetingRoom.length) { %>
+            <% meetingRoom.forEach(meetingRoom => { %>
+                <li class="list-group-item meeting-room">
+                    <strong>Nom de la salle :</strong> <%= meetingRoom.name %> <br>
+                    <strong>Capacité :</strong> <%= meetingRoom.capacity %> <br>
+                    <strong>Équipements :</strong> <%= meetingRoom.amenities.join(', ') %> <br>
+                    <form action="/meetingRoom/<%= meetingRoom._id %>?_method=DELETE" method="POST">
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </form>
+                </li>
+            <% }) %>
+        <% } else { %>
+            <li class="list-group-item">No meeting rooms found</li>
+        <% } %>
+    </ul>
+    <h2>Ajouter une nouvelle salle de réunion</h2>
+    <form action="/meetingRoom" method="POST">
+        <div class="form-group">
+            <label for="name">Nom de la salle :</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="capacity">Capacité :</label>
+            <input type="number" class="form-control" id="capacity" name="capacity" required>
+        </div>
+        <div class="form-group">
+            <label for="amenities">Équipements (séparés par des virgules) :</label>
+            <input type="text" class="form-control" id="amenities" name="amenities">
+        </div>
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+    </form>
+</div>
 </body>
 </html>
-
