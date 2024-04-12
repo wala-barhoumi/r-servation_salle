@@ -6,12 +6,15 @@ const User = require("./models/user.js");
 const MeetingRoom = require('./models/meetingRoom');
 const Reservation =  require("./models/reservation.js");
 const bcrypt = require('bcrypt');
-
+const reservationRoutes =require('./routes/reservationRoutes');
+const meetingRoomRoutes=require('./routes/meetingRoomRoutes');
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-mongoose.connect("mongodb+srv://ons:123ons@cluster0.kkewg2d.mongodb.net/booking")
+// Mount the reservation routes at '/reservations' path
+app.use('/reservations', reservationRoutes);
+app.use('/meetingRoom',meetingRoomRoutes);
+mongoose.connect("mongodb+srv://user:walawala@cluster0.jfztsft.mongodb.net/reservationApp")
     .then(() =>{
         console.log("connected");})
     .catch(()=>{
@@ -50,25 +53,36 @@ app.get('/signup',function (req,res){
 });
 // Register User
 app.post("/signup", async (req, res) => {
-    const data = {
-    id: req.body.id,
-    name: req.body.username,
-    email: req.body.password,
-    password: req.body.password
-   
-}
-     const existingUser = await User.findOne({name:data.name});
-     if (existingUser){
-            res.send("user already exist ")
-     } else { 
-        //hash password
-        const saltRounds = 10 ; 
-        const hashedPassword = await  bcrypt.hash(data.password, saltRounds);
-        data.password = hashedPassword; 
-        const userdata= await User.insertMany(data);
-        console.log (userdata);
+    const { id, username, email, password } = req.body;
+
+    try {
+        // Check if the user already exists
+        const existingUser = await User.findOne({ name: username });
+        if (existingUser) {
+            return res.status(400).send("User already exists.");
+        }
+
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Create a new user object with hashed password
+        const newUser = new User({
+            id,
+            name: username,
+            email,
+            password: hashedPassword
+        });
+
+        // Save the new user to the database
+        const savedUser = await newUser.save();
+
+        // Respond with success message
+        res.status(201).send("User created successfully.");
+    } catch (error) {
+        // Handle errors
+        console.error("Error:", error);
+        res.status(500).send("Server Error");
     }
-   
 });
 
 app.get('/meetingRoom', async (req, res) => {
