@@ -1,12 +1,10 @@
 const Reservation = require('../models/reservation');
-import { QueryOptions } from 'mongoose';
-
-/*const options: QueryOptions = {
+const options = {
     new: true,
     lean: true,
     includeResultMetadata: true
 };
-*/
+
 exports.createReservation = async (req, res) => {
     try {
         const { user, meetingRoom, startTime, endTime } = req.body;
