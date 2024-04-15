@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 const meetingRoomController = require('../controllers/meetingRoomController');
 
-router.get('/meetingRoom/', meetingRoomController.getAllMeetingRooms);
-router.get('/meetingRoom/:id',meetingRoomController.getMeetingRoomById)
-router.post('/meetingRoom/', meetingRoomController.createMeetingRoom);
-router.put('/meetingRoom/:id', meetingRoomController.updateMeetingRoom);
-router.delete('/meetingRoom/:id', meetingRoomController.deleteMeetingRoom);
+router.get('/', meetingRoomController.getAllMeetingRooms);
+router.get('/:id',meetingRoomController.getMeetingRoomById)
+router.post('/', meetingRoomController.createMeetingRoom);
+router.put('/:id', meetingRoomController.updateMeetingRoom);
+router.post('/:id', meetingRoomController.deleteMeetingRoom);
 
 module.exports = router;

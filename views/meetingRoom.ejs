@@ -16,6 +16,7 @@
         }
         .meeting-room form {
             display: inline;
+            margin-right: 5px; /* Add margin between buttons */
         }
     </style>
 </head>
@@ -29,9 +30,17 @@
                     <strong>Nom de la salle :</strong> <%= meetingRoom.name %> <br>
                     <strong>Capacité :</strong> <%= meetingRoom.capacity %> <br>
                     <strong>Équipements :</strong> <%= meetingRoom.amenities.join(', ') %> <br>
-                    <form action="/meetingRoom/<%= meetingRoom._id %>?_method=DELETE" method="POST">
+                    <form action="/meetingRoom/<%= meetingRoom._id %>" method="POST">
+                        <input type="hidden" name="_method" value="DELETE">
                         <button type="submit" class="btn btn-danger">Supprimer</button>
                     </form>
+
+                    <form action="/meetingRoom/<%= meetingRoom._id %>" method="POST">
+                        <input type="hidden" name="_method" value="PUT">
+
+                        <button type="submit" class="btn btn-primary">Modifier</button>
+                    </form>
+
                 </li>
             <% }) %>
         <% } else { %>

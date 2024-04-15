@@ -1,24 +1,19 @@
 const Reservation = require('../models/reservation');
-const options = {
-    new: true,
-    lean: true,
-    includeResultMetadata: true
-};
+const MeetingRoom = require('../models/meetingRoom');
 
 exports.createReservation = async (req, res) => {
     try {
-        const { user, meetingRoom, startTime, endTime } = req.body;
+        const { user, selectedMeetingRoom, startTime, endTime } = req.body;
 
         // Check if the meeting room is available for the specified time
         const existingReservation = await Reservation.findOne({
-            meetingRoom: meetingRoom,
+            meetingRoom: selectedMeetingRoom,
             $or: [
-                { $and: [{ startTime: { $lt: endTime } }, { endTime: { $gt: startTime } }] }, // New reservation starts before existing ends
-                { startTime: { $gte: startTime, $lt: endTime } }, // New reservation starts during existing
-                { endTime: { $gt: startTime, $lte: endTime } } // New reservation ends during existing
+                { $and: [{ startTime: { $lt: endTime } }, { endTime: { $gt: startTime } }] },
+                { startTime: { $gte: startTime, $lt: endTime } },
+                { endTime: { $gt: startTime, $lte: endTime } }
             ]
         });
-
 
         if (existingReservation) {
             return res.status(400).json({ error: 'The meeting room is already booked for the specified time.' });
@@ -27,7 +22,7 @@ exports.createReservation = async (req, res) => {
         // Create new reservation
         const reservation = new Reservation({
             user: user,
-            meetingRoom: meetingRoom,
+            meetingRoom: selectedMeetingRoom,
             startTime: startTime,
             endTime: endTime
         });
@@ -43,14 +38,15 @@ exports.createReservation = async (req, res) => {
 
 exports.getAllReservations = async (req, res) => {
     try {
-        // Fetch all reservations from the database
-        const reservations = await Reservation.find().populate('user').populate('meetingRoom');
-        res.status(200).json(reservations);
+        // Fetch all reservations from the database and populate 'user' and 'meetingRoom' fields
+        const reservation = await Reservation.find().populate('user').populate('meetingRoom');
+        res.render('reservation', { reservation });
     } catch (error) {
         console.error('Error fetching reservations:', error);
         res.status(500).json({ error: 'An error occurred while fetching reservations.' });
     }
 };
+
 
 exports.updateReservation = async (req, res) => {
     try {
@@ -66,7 +62,7 @@ exports.updateReservation = async (req, res) => {
         const reservation = await Reservation.findByIdAndUpdate(
             id,
             { startTime: startTime, endTime: endTime },
-            options
+            { new: true, lean: true, includeResultMetadata: true }
         );
 
         if (!reservation) {
@@ -79,7 +75,6 @@ exports.updateReservation = async (req, res) => {
         res.status(500).json({ error: 'An error occurred while updating the reservation.' });
     }
 };
-
 
 exports.deleteReservation = async (req, res) => {
     try {
