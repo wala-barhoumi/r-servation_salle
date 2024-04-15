@@ -2,8 +2,8 @@ const MeetingRoom = require('../models/meetingRoom');
 
 exports.getAllMeetingRooms = async (req, res) => {
     try {
-        const meetingRooms = await MeetingRoom.find();
-        res.render('meetingRooms',{meetingRooms});
+        const meetingRoom = await MeetingRoom.find();
+        res.render('meetingRoom', { meetingRoom});
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -30,7 +30,10 @@ exports.createMeetingRoom = async (req, res) => {
     });
     try {
         const newMeetingRoom = await meetingRoom.save();
-        res.status(201).json(newMeetingRoom);
+        // After creating a new meeting room, fetch the updated list of meeting rooms
+        const updatedMeetingRoom = await MeetingRoom.find();
+        // Render the updated meeting room list
+        res.status(201).render('meetingRoom', { meetingRoom: updatedMeetingRoom });
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -42,6 +45,8 @@ exports.updateMeetingRoom = async (req, res) => {
         if (!meetingRoom) {
             return res.status(404).json({ message: 'Meeting room not found' });
         }
+
+        // Update meeting room properties if provided in the request body
         if (req.body.name != null) {
             meetingRoom.name = req.body.name;
         }
@@ -54,8 +59,15 @@ exports.updateMeetingRoom = async (req, res) => {
         if (req.body.availability != null) {
             meetingRoom.availability = req.body.availability;
         }
+
+        // Save the updated meeting room
         const updatedMeetingRoom = await meetingRoom.save();
-        res.status(200).json(updatedMeetingRoom);
+
+        // After updating, fetch the updated list of meeting rooms
+        const updatedMeetingRooms = await MeetingRoom.find();
+
+        // Render the updated meeting room list
+        res.render('meetingRoom', { meetingRoom: meetingRoom });
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -63,13 +75,25 @@ exports.updateMeetingRoom = async (req, res) => {
 
 exports.deleteMeetingRoom = async (req, res) => {
     try {
-        const meetingRoom = await MeetingRoom.findById(req.id);
+        // Find the meeting room by ID
+        const meetingRoom = await MeetingRoom.findById(req.params.id);
+
+        // Check if the meeting room exists
         if (!meetingRoom) {
             return res.status(404).json({ message: 'Meeting room not found' });
         }
-        await meetingRoom.remove();
-        res.status(200).json({ message: 'Meeting room deleted' });
+
+        // Remove the meeting room
+        await meetingRoom.deleteOne();
+
+        // After deletion, fetch updated meeting rooms
+        const updatedMeetingRoom = await MeetingRoom.find();
+
+        // Render the updated meeting room list
+        res.render('meetingRoom', { meetingRoom: updatedMeetingRoom });
+
     } catch (error) {
+        // Handle any errors
         res.status(500).json({ message: error.message });
     }
 };

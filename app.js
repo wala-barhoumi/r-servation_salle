@@ -1,6 +1,8 @@
 const express = require ("express");
 const bodyParser = require('body-parser');
 const app = express();
+const dotenv = require('dotenv');
+dotenv.config()
 const mongoose=require("mongoose");
 const User = require("./models/user.js");
 const MeetingRoom = require('./models/meetingRoom');
@@ -8,12 +10,24 @@ const Reservation =  require("./models/reservation.js");
 const bcrypt = require('bcrypt');
 const reservationRoutes =require('./routes/reservationRoutes');
 const meetingRoomRoutes=require('./routes/meetingRoomRoutes');
+const reservationController = require("./controllers/reservationController");
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 // Mount the reservation routes at '/reservations' path
-app.use('/reservations', reservationRoutes);
+app.use('/reservation', reservationRoutes);
 app.use('/meetingRoom',meetingRoomRoutes);
+
+
+app.post('/reservation', reservationController.createReservation);
+app.get('/reservation', reservationController.getAllReservations);
+app.put('/reservation/:id', reservationController.updateReservation);
+app.delete('/reservation/:id', reservationController.deleteReservation);
+
+// Register models with Mongoose
+mongoose.model('Reservation', Reservation.schema);
+mongoose.model('MeetingRoom', MeetingRoom.schema);
+
 mongoose.connect("mongodb+srv://user:walawala@cluster0.jfztsft.mongodb.net/reservationApp")
     .then(() =>{
         console.log("connected");})
@@ -35,18 +49,22 @@ app.get('/login',function (req,res){
     res.render('login');
 
 });
-app.post("/login",async (req , res)=>{
-    const data = {
-        
+/*app.post("/login", async (req, res) => {
+    const userData = {
         name: req.body.username,
-        
         password: req.body.password
-       
-       
+    };
+
+    try {
+        const newUser = await User.insertOne(userData);
+        console.log(newUser);
+        res.status(200).send("User created successfully!");
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error creating user.");
     }
-    const userdata= await User.insertMany(data);
-        console.log (userdata); 
-})
+});
+
 
 app.get('/signup',function (req,res){
     res.render('signup');
@@ -83,9 +101,9 @@ app.post("/signup", async (req, res) => {
         console.error("Error:", error);
         res.status(500).send("Server Error");
     }
-});
+});*/
 
-app.get('/meetingRoom', async (req, res) => {
+/*app.get('/meetingRoom', async (req, res) => {
     try {
         // Fetch meeting rooms from the database using your model
         const meetingRoom = await MeetingRoom.find();
@@ -97,7 +115,7 @@ app.get('/meetingRoom', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
-/*router.post("/meetingRoom", async (req, res) => {
+app.post("/meetingRoom", async (req, res) => {
     try {
         // Extract data from the request body
         const { name, capacity, amenities } = req.body;
@@ -119,7 +137,6 @@ app.get('/meetingRoom', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
-*/
 
 
 // Assuming you have an array of reservations stored in a variable named 'reservations'
@@ -139,7 +156,41 @@ app.get('/reservation', async (req, res) => {
     }
 });
 
+// POST method to create a reservation
+app.post('/reservation', async (req, res) => {
+    try {
+        const { user, selectedMeetingRoom, startTime, endTime } = req.body;
 
+        // Check if the meeting room is available for the specified time
+        const existingReservation = await Reservation.findOne({
+            meetingRoom: selectedMeetingRoom,
+            $or: [
+                { $and: [{ startTime: { $lt: endTime } }, { endTime: { $gt: startTime } }] },
+                { startTime: { $gte: startTime, $lt: endTime } },
+                { endTime: { $gt: startTime, $lte: endTime } }
+            ]
+        });
+
+        if (existingReservation) {
+            return res.status(400).json({ error: 'The meeting room is already booked for the specified time.' });
+        }
+
+        // Create new reservation
+        const reservation = new Reservation({
+            user: user,
+            meetingRoom: selectedMeetingRoom,
+            startTime: startTime,
+            endTime: endTime
+        });
+
+        await reservation.save();
+
+        res.status(201).json({ message: 'Reservation created successfully', reservation: reservation });
+    } catch (err) {
+        console.error('Error creating reservation:', err);
+        res.status(500).json({ error: 'An error occurred while creating the reservation.' });
+    }
+});*/
 app.listen(4100,function () {
     console.log("server started on port 4100");
 
