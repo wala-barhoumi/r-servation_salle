@@ -23,6 +23,16 @@
 <body>
 <div class="container">
     <h1>Gestion des salles de réunion</h1>
+    <!-- Search form -->
+    <!-- Search form -->
+    <form action="/meetingRoom/findbyname" method="GET" class="mb-3">
+        <div class="form-group">
+            <label for="search">Recherche par nom :</label>
+            <input type="text" class="form-control" id="search" name="name" placeholder="Nom de la salle">
+        </div>
+        <button type="submit" class="btn btn-primary">Rechercher</button>
+    </form>
+
     <ul class="list-group">
         <% if (meetingRoom && meetingRoom.length) { %>
             <% meetingRoom.forEach(meetingRoom => { %>
