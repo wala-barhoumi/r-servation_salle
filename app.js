@@ -49,7 +49,7 @@ app.get('/login',function (req,res){
     res.render('login');
 
 });
-/*app.post("/login", async (req, res) => {
+app.post("/login", async (req, res) => {
     const userData = {
         name: req.body.username,
         password: req.body.password
@@ -101,7 +101,7 @@ app.post("/signup", async (req, res) => {
         console.error("Error:", error);
         res.status(500).send("Server Error");
     }
-});*/
+});
 
 /*app.get('/meetingRoom', async (req, res) => {
     try {

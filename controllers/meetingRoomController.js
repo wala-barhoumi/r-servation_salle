@@ -61,18 +61,29 @@ exports.updateMeetingRoom = async (req, res) => {
         }
 
         // Save the updated meeting room
-        const updatedMeetingRoom = await meetingRoom.save();
+        await meetingRoom.save();
 
-        // After updating, fetch the updated list of meeting rooms
-        const updatedMeetingRooms = await MeetingRoom.find();
+        // Fetch the updated meeting room after saving
+        const updatedMeetingRoom = await MeetingRoom.find();
 
-        // Render the updated meeting room list
-        res.render('meetingRoom', { meetingRoom: meetingRoom });
+        // Render the updated meeting room
+        res.render('meetingRoom', { meetingRoom: updatedMeetingRoom });
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
 };
 
+exports.getMeetingRoomform=async (req,res)=>{
+    try {
+        const meetingRoom = await MeetingRoom.findById(req.params.id);
+        if (!meetingRoom) {
+            return res.status(404).json({ message: 'Meeting room not found' });
+        }
+        res.render('updateMeetingRoom', { meetingRoom: meetingRoom });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
 exports.deleteMeetingRoom = async (req, res) => {
     try {
         // Find the meeting room by ID
