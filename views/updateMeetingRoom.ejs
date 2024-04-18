@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Custom CSS styles */
+        body {
+            padding: 20px;
+        }
+        .meeting-room {
+            margin-bottom: 20px;
+        }
+        .update-meeting-room-form {
+            margin: 20px auto; /* Center horizontally */
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+    </style>
+</head>
+<html lang="en">
+<div class="update-meeting-room-form">
+    <form action="/meetingRoom/<%= meetingRoom._id %>/save" method="POST">
+        <input type="hidden" name="_method" value="PUT">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="<%= meetingRoom.name %>">
+        </div>
+        <div class="form-group">
+            <label for="capacity">Capacity:</label>
+            <input type="number" id="capacity" name="capacity" value="<%= meetingRoom.capacity %>">
+        </div>
+        <div class="form-group">
+            <label for="amenities">Amenities:</label>
+            <input type="text" id="amenities" name="amenities" value="<%= meetingRoom.amenities %>">
+        </div>
+        <div class="form-group">
+            <label for="availability">Availability:</label>
+            <input type="text" id="availability" name="availability" value="<%= meetingRoom.availability %>">
+        </div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+</div>
+
+
+</html>
