@@ -4,7 +4,7 @@ const meetingRoomController = require('../controllers/meetingRoomController');
 const MeetingRoom = require('../models/meetingRoom'); // Adjust the path as needed
 
 router.get('/', meetingRoomController.getAllMeetingRooms);
-router.get('/:id',meetingRoomController.getMeetingRoomById);
+router.get('/findbyname',meetingRoomController.getMeetingRoomByName);
 router.post('/', meetingRoomController.createMeetingRoom);
 router.post('/:id/save', meetingRoomController.updateMeetingRoom);
 router.post('/:id', meetingRoomController.deleteMeetingRoom);

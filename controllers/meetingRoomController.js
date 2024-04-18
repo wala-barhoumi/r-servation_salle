@@ -9,17 +9,21 @@ exports.getAllMeetingRooms = async (req, res) => {
     }
 };
 
-exports.getMeetingRoomById = async (req, res) => {
+exports.getMeetingRoomByName = async (req, res) => {
     try {
-        const meetingRoom = await MeetingRoom.findById(req.params.id);
-        if (!meetingRoom) {
-            return res.status(404).json({ message: 'Meeting room not found' });
-        }
-        res.status(200).json(meetingRoom);
+            const decodedRoomName = decodeURIComponent(req.query.name);
+        const meetingRoom = await MeetingRoom.find({ name: decodedRoomName });
+
+
+
+        res.status(200).render('meetingRoom', {  meetingRoom });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
+
+//Conference%20Room%20A
+
 
 exports.createMeetingRoom = async (req, res) => {
     const meetingRoom = new MeetingRoom({
