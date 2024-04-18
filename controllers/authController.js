@@ -2,7 +2,11 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-// Fonction d'inscription
+
+exports.getSignup=async (req,res)=>{
+    res.render('signup');
+};
+
 exports.register = async (req, res) => {
     const { username, email, password } = req.body;
 
@@ -59,5 +63,22 @@ exports.login = async (req, res) => {
         res.status(500).json({ message: 'Erreur lors de la connexion.' });
     }
 };
+exports.getLogin = async (req, res) => {
+    try {
+        res.render('login');
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Error rendering login page.' });
+    }
+};
 
+// Function to handle user logout
+exports.logout = async (req, res) => {
+    try {
+        res.redirect('/login'); // Redirect the user to the login page after logout
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Error logging out.' });
+    }
+};
 
