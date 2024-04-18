@@ -87,7 +87,7 @@ app.post("/signup", async (req, res) => {
         const newUser = new User({
             id,
             name: username,
-            email,
+            email:email,
             password: hashedPassword
         });
 

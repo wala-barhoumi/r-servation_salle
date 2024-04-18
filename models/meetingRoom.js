@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const meetingRoomSchema = new mongoose.Schema({
-    name: { type: String, required: false },
+    name: { type: String, required: false  },
     capacity: { type: Number, required: false },
     amenities: [String],
     availability: { type: Boolean, default: false }
