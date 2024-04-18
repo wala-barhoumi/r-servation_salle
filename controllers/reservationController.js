@@ -1,5 +1,8 @@
 const Reservation = require('../models/reservation');
 const MeetingRoom = require('../models/meetingRoom');
+const User = require('../models/user.js');
+const exec = require("nodemon/lib/config/exec");
+
 
 exports.createReservation = async (req, res) => {
     try {
@@ -35,17 +38,21 @@ exports.createReservation = async (req, res) => {
         res.status(500).json({ error: 'An error occurred while creating the reservation.' });
     }
 };
-
 exports.getAllReservations = async (req, res) => {
     try {
         // Fetch all reservations from the database and populate 'user' and 'meetingRoom' fields
-        const reservation = await Reservation.find().populate('user').populate('meetingRoom');
-        res.render('reservation', { reservation });
+        const reservations = await Reservation.find()
+            .populate({ path: 'user', select: 'email' })
+            .populate({path:'meetingRoom',select:'name'})
+            .exec();
+        res.render('reservation', { reservation: reservations });
+        console.log(reservations);
     } catch (error) {
         console.error('Error fetching reservations:', error);
         res.status(500).json({ error: 'An error occurred while fetching reservations.' });
     }
 };
+
 
 
 exports.updateReservation = async (req, res) => {
