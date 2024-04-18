@@ -38,6 +38,7 @@ exports.createReservation = async (req, res) => {
         res.status(500).json({ error: 'An error occurred while creating the reservation.' });
     }
 };
+
 exports.getAllReservations = async (req, res) => {
     try {
         // Fetch all reservations from the database and populate 'user' and 'meetingRoom' fields
@@ -45,7 +46,9 @@ exports.getAllReservations = async (req, res) => {
             .populate({ path: 'user', select: 'email' })
             .populate({path:'meetingRoom',select:'name'})
             .exec();
-        res.render('reservation', { reservation: reservations });
+
+        const meetingRooms = await MeetingRoom.find()
+        res.render('reservation', { reservation: reservations, meetingRoom: meetingRooms });
         console.log(reservations);
     } catch (error) {
         console.error('Error fetching reservations:', error);
