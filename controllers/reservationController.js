@@ -47,8 +47,8 @@ exports.getAllReservations = async (req, res) => {
             .populate({path:'meetingRoom',select:'name'})
             .exec();
 
-        const meetingRooms = await MeetingRoom.find()
-        res.render('reservation', { reservation: reservations, meetingRoom: meetingRooms });
+        const meetingRoom = await MeetingRoom.find()
+        res.render('reservation', { reservation: reservations, meetingRoom: meetingRoom });
         console.log(reservations);
     } catch (error) {
         console.error('Error fetching reservations:', error);
@@ -56,33 +56,60 @@ exports.getAllReservations = async (req, res) => {
     }
 };
 
-
-
 exports.updateReservation = async (req, res) => {
     try {
+        // Extract reservation ID and updated data from request
         const { id } = req.params;
         const { startTime, endTime } = req.body;
 
-        // Validate input
+        // Validate input data
         if (!id || !startTime || !endTime) {
             return res.status(400).json({ error: 'Invalid input data.' });
         }
 
-        // Find the reservation by ID and update its startTime and endTime
+        // Find the reservation by ID and update its start and end times
         const reservation = await Reservation.findByIdAndUpdate(
             id,
-            { startTime: startTime, endTime: endTime },
-            { new: true, lean: true, includeResultMetadata: true }
+            { startTime, endTime },
+            { new: true }
         );
 
+        // Check if the reservation exists
         if (!reservation) {
             return res.status(404).json({ error: 'Reservation not found.' });
         }
 
-        res.status(200).json({ message: 'Reservation updated successfully', reservation });
+        // Fetch all reservations to render the updated view
+        const reservations = await Reservation.find();
+
+
+        const meetingRoom = await MeetingRoom.find()
+        res.render('reservation', { reservation: reservations, meetingRoom: meetingRoom });
+
     } catch (error) {
         console.error('Error updating reservation:', error);
         res.status(500).json({ error: 'An error occurred while updating the reservation.' });
+    }
+};
+
+exports.renderUpdateReservation = async (req, res) => {
+    try {
+        // Extract reservation ID from request parameters
+        const { id } = req.params;
+
+        // Find the reservation by ID
+        const reservation = await Reservation.findById(id);
+
+        // Check if the reservation exists
+        if (!reservation) {
+            return res.status(404).json({ error: 'Reservation not found.' });
+        }
+
+        // Render the update reservation view and pass reservation data
+        res.render('updateReservation', { reservation });
+    } catch (error) {
+        console.error('Error rendering update reservation view:', error);
+        res.status(500).json({ error: 'An error occurred while rendering the update reservation view.' });
     }
 };
 
@@ -101,10 +128,13 @@ exports.deleteReservation = async (req, res) => {
         if (!reservation) {
             return res.status(404).json({ error: 'Reservation not found.' });
         }
-
-        res.status(200).json({ message: 'Reservation deleted successfully' });
+        const updateReservation = await Reservation.find();
+        res.render('reservation', { reservation: updateReservation }); // Corrected variable name
     } catch (error) {
         console.error('Error deleting reservation:', error);
         res.status(500).json({ error: 'An error occurred while deleting the reservation.' });
     }
+
+
 };
+
