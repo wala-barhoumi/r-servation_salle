@@ -36,12 +36,36 @@ db.once('open', () => {
     console.log('Connect à MongoDB !');
 });
 
+// GET request handler for displaying the reservation form
+app.get('/formreservation', (req, res) => {
+    res.render('formreservation'); // Assuming you're using a templating engine like EJS
+});
+
+// POST request handler for processing the form submission
+app.post('/formreservation', (req, res) => {
+    // Retrieve form data from request body
+    const selectedMeetingRoom = req.body.selectedMeetingRoom;
+    const startTime = req.body.startTime;
+    const endTime = req.body.endTime;
+
+    // Process the form data (e.g., save to database)
+    // Replace the following with your logic to handle form submission
+    console.log('Form submitted:');
+    console.log('Selected meeting room:', selectedMeetingRoom);
+    console.log('Start time:', startTime);
+    console.log('End time:', endTime);
+
+    // Send response back to the client
+    res.send('Reservation submitted successfully!');
+});
+
 
 app.get('/', function (req, res) {
     res.render('app');
 });
 
-app.listen(4100,function () {
+
+app.listen(4400,function () {
     console.log("server started on port 4100");
 
 })

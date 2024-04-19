@@ -72,26 +72,11 @@
                     <form action="/reservation/<%= reservation._id %>/edit" method="GET">
                         <button type="submit" class="btn btn-primary">Modifier</button>
                     </form>
-
                 </li>
             <% }); %>
-
-
         </ul>
-        <h2>Ajouter une nouvelle réservation</h2>
-        <form action="/reservation" method="POST">
-            <label for="meetingRoom">Salle de réunion :</label>
-            <select id="meetingRoom" name="selectedMeetingRoom" required class="form-control">
-                <% meetingRoom.forEach(meetingRoom => { %>
-                    <option value="<%= meetingRoom._id %>"><%= meetingRoom.name %></option>
-                <% }); %>
-            </select> <br>
-            <label for="startTime">Date de début :</label>
-            <input type="datetime-local" id="startTime" name="startTime" required class="form-control"> <br>
-            <label for="endTime">Date de fin :</label>
-            <input type="datetime-local" id="endTime" name="endTime" required class="form-control"> <br>
-            <button type="submit" class="btn btn-primary">Réserver</button>
-        </form>
+        <!-- Button to navigate to formreservation route -->
+        <a href="/formreservation" class="btn btn-primary">Ajouter une nouvelle réservation</a>
     </div>
 </body>
 </html>
