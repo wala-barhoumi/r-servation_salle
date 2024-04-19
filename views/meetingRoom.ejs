@@ -32,7 +32,10 @@
         </div>
         <button type="submit" class="btn btn-primary">Rechercher</button>
     </form>
-
+    <div class="col-md-6">
+        <!-- Button to toggle the second form -->
+        <button type="button" class="btn btn-primary add-meeting-room-btn" onclick="toggleAddMeetingRoomForm()">Ajouter</button>
+    </div>
     <ul class="list-group">
         <% if (meetingRoom && meetingRoom.length) { %>
             <% meetingRoom.forEach(meetingRoom => { %>
@@ -55,22 +58,11 @@
             <li class="list-group-item">No meeting rooms found</li>
         <% } %>
     </ul>
-    <h2>Ajouter une nouvelle salle de réunion</h2>
-    <form action="/meetingRoom" method="POST">
-        <div class="form-group">
-            <label for="name">Nom de la salle :</label>
-            <input type="text" class="form-control" id="name" name="name" required>
-        </div>
-        <div class="form-group">
-            <label for="capacity">Capacité :</label>
-            <input type="number" class="form-control" id="capacity" name="capacity" required>
-        </div>
-        <div class="form-group">
-            <label for="amenities">Équipements (séparés par des virgules) :</label>
-            <input type="text" class="form-control" id="amenities" name="amenities">
-        </div>
-        <button type="submit" class="btn btn-primary">Ajouter</button>
-    </form>
+
+        <form action="/meetingRoom/add" method="GET">
+            <button type="submit" class="btn btn-primary">Modifier</button>
+        </form>
+
 </div>
 </body>
 </html>

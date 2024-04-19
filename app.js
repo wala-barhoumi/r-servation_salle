@@ -11,6 +11,7 @@ const bcrypt = require('bcrypt');
 const reservationRoutes =require('./routes/reservationRoutes');
 const meetingRoomRoutes=require('./routes/meetingRoomRoutes');
 const authRoutes=require('./routes/authRoutes');
+const calendarRoutes = require('./routes/calendarRoutes');
 const reservationController = require("./controllers/reservationController");
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());
@@ -18,6 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Mount the reservation routes at '/reservations' path
 app.use('/reservation', reservationRoutes);
 app.use('/meetingRoom',meetingRoomRoutes);
+app.use('/calendar',calendarRoutes);
 app.use('/',authRoutes);
 // Register models with Mongoose
 mongoose.model('Reservation', Reservation.schema);
