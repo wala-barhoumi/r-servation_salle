@@ -129,7 +129,8 @@ exports.deleteReservation = async (req, res) => {
             return res.status(404).json({ error: 'Reservation not found.' });
         }
         const updateReservation = await Reservation.find();
-        res.render('reservation', { reservation: updateReservation }); // Corrected variable name
+        const meetingRoom = await MeetingRoom.find()
+        res.render('reservation', { reservation: updateReservation , meetingRoom:meetingRoom}); // Corrected variable name
     } catch (error) {
         console.error('Error deleting reservation:', error);
         res.status(500).json({ error: 'An error occurred while deleting the reservation.' });
