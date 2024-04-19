@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des salles de réunion</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Custom CSS styles */
+        body {
+            padding: 20px;
+        }
+        .meeting-room {
+            margin-bottom: 20px;
+        }
+        .meeting-room form {
+            display: inline;
+            margin-right: 5px; /* Add margin between buttons */
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <h2>Ajouter une nouvelle salle de réunion</h2>
+    <form action="/meetingRoom/add" method="POST">
+        <div class="form-group">
+            <label for="name">Nom de la salle :</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="capacity">Capacité :</label>
+            <input type="number" class="form-control" id="capacity" name="capacity" required>
+        </div>
+        <div class="form-group">
+            <label for="amenities">Équipements (séparés par des virgules) :</label>
+            <input type="text" class="form-control" id="amenities" name="amenities">
+        </div>
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+    </form>
+</div>
+</body>
+</html>

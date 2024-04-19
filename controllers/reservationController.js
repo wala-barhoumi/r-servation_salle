@@ -138,4 +138,53 @@ exports.deleteReservation = async (req, res) => {
 
 
 };
+exports.searchByDate=async (req,res)=>{
 
+    try {
+        const { date } = req.body;
+
+        // Validate input
+        if (!date) {
+            return res.status(400).json({ error: 'Date is required.' });
+        }
+
+        // Find reservations for the specified date
+        const reservation = await Reservation.find({ startTime: { $gte: date } });
+
+        // Return the reservations found
+        res.status(200).json({ reservation });
+
+    } catch (error) {
+        console.error('Error searching reservations by date:', error);
+        res.status(500).json({ error: 'An error occurred while searching reservations by date.' });
+    }
+};
+/*const moment = require('moment');
+
+exports.renderCalendar = async (req, res) => {
+    try {
+        // Get the current month and year
+        const currentMonth = moment().month() + 1; // Adding 1 to get the correct month number (1-based index)
+        const currentYear = moment().year();
+
+        // Get the first day of the current month
+        const firstDayOfMonth = moment().startOf('month');
+
+        // Get the last day of the current month
+        const lastDayOfMonth = moment().endOf('month');
+
+        // Fetch reservations for the current month
+        const reservations = await Reservation.find({
+            startTime: { $gte: firstDayOfMonth, $lte: lastDayOfMonth }
+        }).populate('meetingRoom');
+
+        // Render the calendar view and pass the reservations data
+        res.render('calendar', { reservations, currentMonth, currentYear });
+    } catch (error) {
+        console.error('Error rendering calendar:', error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+exports.getCalendar=async  (req, res) => {
+    res.render('calendar');
+};*/

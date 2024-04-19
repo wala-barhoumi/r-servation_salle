@@ -111,4 +111,7 @@ exports.deleteMeetingRoom = async (req, res) => {
         // Handle any errors
         res.status(500).json({ message: error.message });
     }
-};
+}
+exports.addRoomForm=async (req,res)=>{
+    res.render('addmeetingroom');
+}

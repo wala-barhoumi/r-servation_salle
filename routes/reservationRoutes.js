@@ -7,5 +7,6 @@ router.get('/:id/edit',reservationController.renderUpdateReservation);
 router.post('/', reservationController.createReservation);
 router.post('/:id/save', reservationController.updateReservation);
 router.post('/:id', reservationController.deleteReservation);
-
+router.post('/search', reservationController.searchByDate);
+//router.get('/calendar',reservationController.getCalendar);
 module.exports = router;
