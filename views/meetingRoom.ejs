@@ -33,8 +33,9 @@
         <button type="submit" class="btn btn-primary">Rechercher</button>
     </form>
     <div class="col-md-6">
-        <!-- Button to toggle the second form -->
-        <button type="button" class="btn btn-primary add-meeting-room-btn" onclick="toggleAddMeetingRoomForm()">Ajouter</button>
+        <form action="/meetingRoom/add" method="GET">
+            <button type="submit" class="btn btn-primary">Ajouter</button>
+        </form>
     </div>
     <ul class="list-group">
         <% if (meetingRoom && meetingRoom.length) { %>
@@ -59,9 +60,6 @@
         <% } %>
     </ul>
 
-        <form action="/meetingRoom/add" method="GET">
-            <button type="submit" class="btn btn-primary">Modifier</button>
-        </form>
 
 </div>
 </body>
