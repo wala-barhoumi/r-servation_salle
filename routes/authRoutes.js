@@ -12,4 +12,8 @@ router.post('/signup', authController.register);
 
 // Route for logout
 router.get('/logout', authController.logout);
+
+//listuser
+
+router.get('/userList', authController.getUserList);
 module.exports = router;
