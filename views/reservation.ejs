@@ -80,8 +80,9 @@
                 </li>
             <% }); %>
         </ul>
-        <!-- Button to navigate to formreservation route -->
-        <a href="/formreservation" class="btn btn-primary">Ajouter une nouvelle réservation</a>
+        <form action="/reservation/add" method="GET">
+            <button type="submit" class="btn btn-primary">ajouter</button>
+        </form>
     </div>
 </body>
 </html>

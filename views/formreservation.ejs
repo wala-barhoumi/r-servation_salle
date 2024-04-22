@@ -4,20 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reservation Form</title>
-    <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
+
     <style>
-        /* Your custom CSS styles here */
+
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Reservation Form</h1>
-        <!-- Your reservation form HTML markup here -->
-        <!-- Example form fields -->
+
         <h2>Ajouter une nouvelle réservation</h2>
-        <form action="/formreservation" method="post">
+        <form action="/reservation/add" method="POST">
             <label for="meetingRoom">Salle de réunion :</label>
             <select id="meetingRoom" name="selectedMeetingRoom" required class="form-control">
                 <% meetingRoom.forEach(meetingRoom => { %>
