@@ -59,6 +59,11 @@
 <body>
     <div class="container">
         <h1>Gestion des réservations</h1>
+        <form action="/reservation/search" method="POST">
+            <label for="searchDate">Rechercher par date :</label>
+            <input type="date" id="searchDate" name="searchDate" class="form-control">
+            <button type="submit" class="btn btn-primary">Rechercher</button>
+        </form>
         <ul>
             <% reservation.forEach(reservation => { %>
                 <li>
@@ -75,8 +80,9 @@
                 </li>
             <% }); %>
         </ul>
-        <!-- Button to navigate to formreservation route -->
-        <a href="/formreservation" class="btn btn-primary">Ajouter une nouvelle réservation</a>
+        <form action="/reservation/add" method="GET">
+            <button type="submit" class="btn btn-primary">ajouter</button>
+        </form>
     </div>
 </body>
 </html>

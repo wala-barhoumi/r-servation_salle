@@ -31,8 +31,11 @@ exports.createReservation = async (req, res) => {
         });
 
         await reservation.save();
+        const reservations = await Reservation.find();
 
-        res.status(201).json({ message: 'Reservation created successfully', reservation: reservation });
+
+        const meetingRoom = await MeetingRoom.find()
+        res.render('reservation', { reservation: reservations, meetingRoom: meetingRoom });
     } catch (err) {
         console.error('Error creating reservation:', err);
         res.status(500).json({ error: 'An error occurred while creating the reservation.' });
@@ -58,28 +61,26 @@ exports.getAllReservations = async (req, res) => {
 
 exports.updateReservation = async (req, res) => {
     try {
-        // Extract reservation ID and updated data from request
+
         const { id } = req.params;
         const { startTime, endTime } = req.body;
 
-        // Validate input data
+
         if (!id || !startTime || !endTime) {
             return res.status(400).json({ error: 'Invalid input data.' });
         }
 
-        // Find the reservation by ID and update its start and end times
+
         const reservation = await Reservation.findByIdAndUpdate(
             id,
             { startTime, endTime },
             { new: true }
         );
 
-        // Check if the reservation exists
         if (!reservation) {
             return res.status(404).json({ error: 'Reservation not found.' });
         }
 
-        // Fetch all reservations to render the updated view
         const reservations = await Reservation.find();
 
 
@@ -94,10 +95,9 @@ exports.updateReservation = async (req, res) => {
 
 exports.renderUpdateReservation = async (req, res) => {
     try {
-        // Extract reservation ID from request parameters
+
         const { id } = req.params;
 
-        // Find the reservation by ID
         const reservation = await Reservation.findById(id);
 
         // Check if the reservation exists
@@ -117,12 +117,12 @@ exports.deleteReservation = async (req, res) => {
     try {
         const { id } = req.params;
 
-        // Validate input
+
         if (!id) {
             return res.status(400).json({ error: 'Invalid reservation ID.' });
         }
 
-        // Find the reservation by ID and delete it
+
         const reservation = await Reservation.findByIdAndDelete(id);
 
         if (!reservation) {
@@ -138,4 +138,34 @@ exports.deleteReservation = async (req, res) => {
 
 
 };
+exports.searchByDate = async (req, res) => {
+    try {
+        const { date } = req.body;
 
+
+        if (!date) {
+            return res.status(400).json({ error: 'Date is required.' });
+        }
+
+
+        const reservations = await Reservation.find({ startTime: { $gte: date } });
+
+
+        res.status(200).json({ reservations });
+    } catch (error) {
+        console.error('Error searching reservations by date:', error);
+        res.status(500).json({ error: 'An error occurred while searching reservations by date.' });
+    }
+};
+
+
+exports.get=async (req, res) => {
+    try {
+
+        const meetingRoom = await MeetingRoom.find();
+
+        res.render('formreservation', { meetingRoom: meetingRoom });
+    } catch (error) {
+        console.error('Error rendering form:', error);
+        res.status(500).json({error: 'An error occurred while rendering the form.'});
+    }};

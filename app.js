@@ -11,6 +11,7 @@ const bcrypt = require('bcrypt');
 const reservationRoutes =require('./routes/reservationRoutes');
 const meetingRoomRoutes=require('./routes/meetingRoomRoutes');
 const authRoutes=require('./routes/authRoutes');
+const calendarRoutes = require('./routes/calendarRoutes');
 const reservationController = require("./controllers/reservationController");
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());
@@ -18,6 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Mount the reservation routes at '/reservations' path
 app.use('/reservation', reservationRoutes);
 app.use('/meetingRoom',meetingRoomRoutes);
+app.use('/calendar',calendarRoutes);
 app.use('/',authRoutes);
 app.use(express.static('public'));
 // Register models with Mongoose
@@ -37,40 +39,10 @@ db.once('open', () => {
     console.log('Connect à MongoDB !');
 });
 
-app.get('/example', (req, res) => {
-    res.render('example', { imagePath: req.protocol + '://' + req.get('host') + '/views/images.jpg' });
-});
-
-// GET request handler for displaying the reservation form
-app.get('/formreservation', (req, res) => {
-    res.render('formreservation'); // Assuming you're using a templating engine like EJS
-});
-
-// POST request handler for processing the form submission
-app.post('/formreservation', (req, res) => {
-    // Retrieve form data from request body
-    const selectedMeetingRoom = req.body.selectedMeetingRoom;
-    const startTime = req.body.startTime;
-    const endTime = req.body.endTime;
-
-    // Process the form data (e.g., save to database)
-    // Replace the following with your logic to handle form submission
-    console.log('Form submitted:');
-    console.log('Selected meeting room:', selectedMeetingRoom);
-    console.log('Start time:', startTime);
-    console.log('End time:', endTime);
-
-    // Send response back to the client
-    res.send('Reservation submitted successfully!');
-});
-
-
 app.get('/', function (req, res) {
     res.render('app');
 });
+app.listen(4100,function () {
+    console.log("server started on port 4100");
+});
 
-
-app.listen(4400,function () {
-    console.log("server started on port 4400");
-
-})
