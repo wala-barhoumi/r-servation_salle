@@ -19,6 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/reservation', reservationRoutes);
 app.use('/meetingRoom',meetingRoomRoutes);
 app.use('/',authRoutes);
+app.use(express.static('public'));
 // Register models with Mongoose
 mongoose.model('Reservation', Reservation.schema);
 mongoose.model('MeetingRoom', MeetingRoom.schema);
@@ -34,6 +35,10 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Error de connexion à MongoDB :'));
 db.once('open', () => {
     console.log('Connect à MongoDB !');
+});
+
+app.get('/example', (req, res) => {
+    res.render('example', { imagePath: req.protocol + '://' + req.get('host') + '/views/images.jpg' });
 });
 
 // GET request handler for displaying the reservation form
