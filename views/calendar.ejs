@@ -1,10 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calendar</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         /* CSS styles for the calendar */
         body {
@@ -41,23 +42,43 @@
 </head>
 <body>
 
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">MyBookingApp</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/reservation">Reservations</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/meetingRoom">Meeting Rooms</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
 <h1>Calendar</h1>
-<!-- Calendar table will be rendered here -->
+
 <table>
-    <!-- Table headers (days of the week) -->
+
     <thead>
     <tr>
         <th>Date</th>
-        <!-- Render meeting room names as table headers -->
+
         <% reservations.forEach(reservation => { %>
-            <th><%= reservation.meetingRoom.name %></th>
+            <th><%= reservation.meetingRoom %></th>
         <% }) %>
     </tr>
     </thead>
-    <!-- Table body (dates of the month) -->
+
     <tbody>
-    <!-- Loop through each date in the month -->
-    <% for(let i = 1; i <= 30; i++) { %>
+
+    <% for(let i = 0; i <= 30; i++) { %>
         <tr>
             <!-- Display the date -->
             <td><%= i %></td>
@@ -74,6 +95,10 @@
     </tbody>
 </table>
 
-  
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 </html>

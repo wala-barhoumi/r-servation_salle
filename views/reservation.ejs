@@ -54,35 +54,86 @@
         button:hover {
             background-color: #0056b3;
         }
+        /* Custom CSS styles */
+        body {
+            padding: 20px;
+        }
+        .meeting-room {
+            margin-bottom: 20px;
+        }
+        .meeting-room form {
+            display: inline;
+            margin-right: 5px; /* Add margin between buttons */
+        }
+        .navbar-custom {
+            background-color: #f8f9fa; /* Background color */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow */
+        }
+        .navbar-custom .navbar-brand {
+            color: #007bff; /* Brand text color */
+        }
+        .navbar-custom .nav-link {
+            color: #333; /* Link text color */
+            transition: color 0.3s; /* Smooth color transition */
+        }
+        .navbar-custom .nav-link:hover {
+            color: #0056b3; /* Hover color */
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Gestion des réservations</h1>
-        <form action="/reservation/search" method="POST">
-            <label for="searchDate">Rechercher par date :</label>
-            <input type="date" id="searchDate" name="searchDate" class="form-control">
-            <button type="submit" class="btn btn-primary">Rechercher</button>
-        </form>
-        <ul>
-            <% reservation.forEach(reservation => { %>
-                <li>
-                    <strong>Utilisateur :</strong> <%= reservation.user ? reservation.user.email : 'Unknown' %> <br>
-                    <strong>Salle de réunion :</strong> <%= reservation.meetingRoom ? reservation.meetingRoom.name : 'Unknown' %> <br>
-                    <strong>Date de début :</strong> <%= reservation.startTime %> <br>
-                    <strong>Date de fin :</strong> <%= reservation.endTime %> <br>
-                    <form action="/reservation/<%= reservation._id %>?_method=DELETE" method="POST">
-                        <button type="submit">Supprimer</button>
-                    </form>
-                    <form action="/reservation/<%= reservation._id %>/edit" method="GET">
-                        <button type="submit" class="btn btn-primary">Modifier</button>
-                    </form>
-                </li>
-            <% }); %>
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <a class="navbar-brand" href="#">MyBookingApp</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/calendar">Calendar</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/reservation">Reservation</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/meetingRoom">Rooms</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/login">logout</a>
+            </li>
         </ul>
-        <form action="/reservation/add" method="GET">
-            <button type="submit" class="btn btn-primary">ajouter</button>
-        </form>
     </div>
+</nav>
+<div class="container">
+    <h1>Gestion des réservations</h1>
+    <form action="/reservation/search" method="POST">
+        <label for="searchDate">Rechercher par date :</label>
+        <input type="date" id="searchDate" name="searchDate" class="form-control">
+        <button type="submit" class="btn btn-primary">Rechercher</button>
+    </form>
+    <ul>
+        <% reservation.forEach(reservation => { %>
+            <li>
+                <strong>Utilisateur :</strong> <%= reservation.user ? reservation.user.email : 'Unknown' %> <br>
+                <strong>Salle de réunion :</strong> <%= reservation.meetingRoom ? reservation.meetingRoom.name : 'Unknown' %> <br>
+                <strong>Date de début :</strong> <%= reservation.startTime %> <br>
+                <strong>Date de fin :</strong> <%= reservation.endTime %> <br>
+                <form action="/reservation/<%= reservation._id %>?_method=DELETE" method="POST">
+                    <button type="submit">Supprimer</button>
+                </form>
+                <form action="/reservation/<%= reservation._id %>/edit" method="GET">
+                    <button type="submit" class="btn btn-primary">Modifier</button>
+                </form>
+            </li>
+        <% }); %>
+    </ul>
+    <form action="/reservation/add" method="GET">
+        <button type="submit" class="btn btn-primary">ajouter</button>
+    </form>
+</div>
+<!-- Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
