@@ -8,7 +8,7 @@ exports.getSignup=async (req,res)=>{
 };
 
 exports.register = async (req, res) => {
-    const { username, email, password } = req.body;
+    const {id, username, email, password } = req.body;
 
     try {
         // Vérifier si l'utilisateur existe déjà
@@ -80,5 +80,16 @@ exports.logout = async (req, res) => {
         console.error(err);
         res.status(500).json({ message: 'Error logging out.' });
     }
+    
 };
 
+exports.getUserList = async (req, res) => {
+    try {
+       
+        const users = await User.find({}, 'username email'); // Fetch only username and email fields
+        res.render('userList', { users});
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Error getting user list.' });
+    }
+};

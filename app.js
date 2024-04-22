@@ -21,6 +21,7 @@ app.use('/reservation', reservationRoutes);
 app.use('/meetingRoom',meetingRoomRoutes);
 app.use('/calendar',calendarRoutes);
 app.use('/',authRoutes);
+app.use(express.static('public'));
 // Register models with Mongoose
 mongoose.model('Reservation', Reservation.schema);
 mongoose.model('MeetingRoom', MeetingRoom.schema);
@@ -37,9 +38,11 @@ db.on('error', console.error.bind(console, 'Error de connexion à MongoDB :'));
 db.once('open', () => {
     console.log('Connect à MongoDB !');
 });
+
 app.get('/', function (req, res) {
     res.render('app');
 });
 app.listen(4100,function () {
     console.log("server started on port 4100");
 });
+

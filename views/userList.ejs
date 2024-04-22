@@ -1,0 +1,50 @@
+<!-- userList.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom CSS */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .user-list-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .user-item {
+            list-style-type: none;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5 mb-4">User List</h1>
+        <div class="user-list-container">
+            <ul class="list-unstyled">
+                <% users.forEach(user => { %>
+                    <li class="user-item">
+                        <strong>Username:</strong> <%= user.username %><br>
+                        <strong>Email:</strong> <%= user.email %>
+                    </li>
+                <% }); %>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

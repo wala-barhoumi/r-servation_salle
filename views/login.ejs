@@ -10,49 +10,68 @@
     <style>
         body {
             padding: 20px;
-            background-image: url('bookingimg.webp'); /* Correcting the path */
+            background-image: url('bookingimg.webp');
             background-size: cover;
             background-position: center;
         }
         .form-container {
-            max-width: 400px;
-            margin: 0 auto;
-            background-color: rgba(255, 255, 255, 0.8); /* Setting form background color with transparency */
+            background-color: rgba(255, 255, 255, 0.8);
             padding: 20px;
-            border-radius: 10px; /* Adding border radius for a rounded look */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adding box shadow for depth */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         label {
-            font-weight: bold; /* Making labels bold */
+            font-weight: bold;
         }
         input[type="text"],
         input[type="password"] {
             width: 100%;
             padding: 10px;
             margin-bottom: 20px;
-            border: 1px solid #ced4da; /* Adding border color */
-            border-radius: 5px; /* Adding border radius */
+            border: 1px solid #ced4da;
+            border-radius: 5px;
         }
         button[type="submit"] {
             width: 100%;
             padding: 10px;
-            background-color: #007bff; /* Setting button background color */
-            color: #fff; /* Setting button text color */
+            background-color: #007bff;
+            color: #fff;
             border: none;
-            border-radius: 5px; /* Adding border radius */
+            border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s; /* Adding transition effect */
+            transition: background-color 0.3s;
         }
         button[type="submit"]:hover {
-            background-color: #0056b3; /* Changing background color on hover */
+            background-color: #0056b3;
         }
     </style>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">MyBookingApp</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/calendar">Calendar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/reservation">Reservation</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/rooms">Rooms</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 </head>
-<body>
-    <img src="/bookingimg.webp" alt="Background Image">
+
+<body >
+    <div>
+        <img src="./views/images1.jpg" alt="Example Image">
     <div class="container">
-        <div class="row">
-            <div class="col-md-6 mx-auto">
+        <div class="row justify-content-center"> <!-- Centering the row -->
+            <div class="col-md-6"> <!-- Setting the column width -->
                 <div class="form-container">
                     <h1 class="text-center">Connexion</h1>
                     <form action="/login" method="POST">
